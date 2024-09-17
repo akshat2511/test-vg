@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     const cleanup = async () => {
       try {
-        await axios.post('http://localhost:5000/cleanup');
+        await axios.post('https://sixsplit.onrender.com/cleanup');
       } catch (error) {
         console.error('Error during cleanup:', error);
       }
@@ -53,7 +53,7 @@ function App() {
     files.forEach(file => formData.append('images', file));
 
     try {
-      await axios.post('http://localhost:5000/upload', formData, {
+      await axios.post('https://sixsplit.onrender.com/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -71,7 +71,7 @@ function App() {
 
   const fetchProcessedImages = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/processed-images');
+      const response = await axios.get('https://sixsplit.onrender.com/processed-images');
       setProcessedImages(response.data);
       setSelectedImages(response.data.map(img => img.id));
     } catch (error) {
@@ -88,7 +88,7 @@ function App() {
   const handleGeneratePDF = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/generate-pdf', { selectedImages });
+      await axios.post('https://sixsplit.onrender.com/generate-pdf', { selectedImages });
       setPdfReady(true);
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -99,12 +99,12 @@ function App() {
   };
 
   const handleDownload = () => {
-    window.location.href = 'http://localhost:5000/download-pdf';
+    window.location.href = 'https://sixsplit.onrender.com/download-pdf';
   };
 
   const handleImageDownload = async (imageUrl, partIndex) => {
     try {
-      const response = await fetch(`http://localhost:5000${imageUrl}`);
+      const response = await fetch(`https://sixsplit.onrender.com${imageUrl}`);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -123,7 +123,7 @@ function App() {
   const handleCleanup = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/cleanup');
+      await axios.post('https://sixsplit.onrender.com/cleanup');
       setProcessedImages([]);
       setSelectedImages([]);
       setPdfReady(false);
@@ -259,7 +259,7 @@ function App() {
                   />
                   <label htmlFor={`img-${img.id}`}>
                     <img 
-                      src={`http://localhost:5000${img.imageUrl}`} 
+                      src={`https://sixsplit.onrender.com${img.imageUrl}`} 
                       alt={`${img.originalImage} - Part ${img.partIndex + 1}`} 
                     />
                     <div className="image-info">
